@@ -2,18 +2,23 @@
 
 jupyterhub:
   singleuser:
-    cmd: ['start-singleuser.sh']
+    #cmd: ['start-singleuser.sh']
+    startTimeout: 600
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
       GCSFUSE_BUCKET: pangeo-data
     storage:
+      type: dynamic
+      capacity: 10G
+      dynamic:
+        storageClass: manila-cephfs-share-ond
       extraVolumes:
-        - name: fuse
+        - name: beegfs
           hostPath:
-            path: /dev/fuse
+            path: /mnt/beegfs
       extraVolumeMounts:
-        - name: fuse
-          mountPath: /dev/fuse
+        - name: beegfs
+          mountPath: /home/jovyan/scratch
     cloudMetadata:
       enabled: true
     cpu:
@@ -24,6 +29,13 @@ jupyterhub:
       guarantee: 4G
 
   hub:
+    db:
+      type: sqlite-pvc
+      pvc:
+        accessModes:
+          - ReadWriteMany
+        storage: 1G
+        storageClassName: manila-cephfs-share-ond
     extraConfig:
       customPodHook: |
         from kubernetes import client
@@ -42,10 +54,10 @@ jupyterhub:
     extraVolumes:
       - name: custom-templates
         gitRepo:
-          repository: "https://github.com/pangeo-data/pangeo-custom-jupyterhub-templates.git"
+          repository: "http://github.com/pangeo-data/pangeo-custom-jupyterhub-templates.git"
           revision: "b09721bb1a1248dc115730d3c8a791600eae257e"
     extraVolumeMounts:
-      - mountPath: /usr/local/share/jupyterhub/custom_templates
+      - mountPath: /usr/local/share/jupyterhub/custom_templates.git
         name: custom-templates
         subPath: "pangeo-custom-jupyterhub-templates/templates"
       - mountPath: /usr/local/share/jupyterhub/static/custom
@@ -58,7 +70,11 @@ jupyterhub:
     timeout: 1200
     every: 600
 
-  # this section specifies the IP address for pangeo
+  # this section specifies the IP address for pangeo.pydata.org
+  # remove or change for a custom cluster
   proxy:
     service:
-      loadBalancerIP: <GCE_EXTERNAL_IP>
+      annotations:
+        service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+      type: LoadBalancer
+      loadBalancerIP: 10.60.253.60

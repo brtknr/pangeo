@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+  labels:
+    app: jupyterhub
+    chart: jupyterhub-0.7.0
+    component: proxy-public
+    heritage: Tiller
+    release: pangeohub
+  name: proxy-public
+  namespace: pangeo
+spec:
+  #clusterIP: 10.254.170.122
+  externalTrafficPolicy: Cluster
+  loadBalancerIP: 10.60.253.60
+  ports:
+  - name: http
+    nodePort: 32168
+    port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    component: proxy
+    release: pangeohub
+  sessionAffinity: None
+  type: LoadBalancer
