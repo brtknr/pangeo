@@ -13,14 +13,7 @@ jupyterhub:
       type: dynamic
       capacity: 10G
       dynamic:
-        storageClass: manila-cephfs-share-ond
-      extraVolumes:
-        - name: beegfs
-          hostPath:
-            path: /mnt/beegfs
-      extraVolumeMounts:
-        - name: beegfs
-          mountPath: /home/jovyan/scratch
+        storageClass: nfs-client
     cloudMetadata:
       enabled: true
     cpu:
@@ -37,7 +30,7 @@ jupyterhub:
         accessModes:
           - ReadWriteMany
         storage: 1G
-        storageClassName: manila-cephfs-share-ond
+        storageClassName: nfs-client
     extraConfig:
       customPodHook: |
         from kubernetes import client
@@ -50,22 +43,6 @@ jupyterhub:
             )
             return pod
         c.KubeSpawner.modify_pod_hook = modify_pod_hook
-        c.JupyterHub.logo_file = '/usr/local/share/jupyterhub/static/custom/images/logo.png'
-        c.JupyterHub.template_paths = ['/usr/local/share/jupyterhub/custom_templates/',
-                                      '/usr/local/share/jupyterhub/templates/']
-    extraVolumes:
-      - name: custom-templates
-        gitRepo:
-          repository: "http://github.com/pangeo-data/pangeo-custom-jupyterhub-templates.git"
-          revision: "b09721bb1a1248dc115730d3c8a791600eae257e"
-    extraVolumeMounts:
-      - mountPath: /usr/local/share/jupyterhub/custom_templates.git
-        name: custom-templates
-        subPath: "pangeo-custom-jupyterhub-templates/templates"
-      - mountPath: /usr/local/share/jupyterhub/static/custom
-        name: custom-templates
-        subPath: "pangeo-custom-jupyterhub-templates/assets"
-
   cull:
     enabled: true
     users: false
@@ -74,9 +51,7 @@ jupyterhub:
 
   # this section specifies the IP address for pangeo.pydata.org
   # remove or change for a custom cluster
-  proxy:
-    service:
-      annotations:
-        service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
-      type: LoadBalancer
-      loadBalancerIP: 10.60.253.60
+  ingress:
+    enabled: true
+    hosts:
+      - k8s-bharat-kube-masters-0
