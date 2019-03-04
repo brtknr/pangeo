@@ -1,0 +1,53 @@
+# file: jupyter_config.yaml
+
+jupyterhub:
+  singleuser:
+    image:
+      name: pangeo/pangeo-notebook
+      tag: 2019.03.12
+    startTimeout: 1000
+    storage:
+      type: dynamic
+      capacity: 10G
+      dynamic:
+      #  storageClass: cinder
+      #extraVolumes:
+      #  - name: beegfs
+      #    hostPath:
+      #      path: /mnt/storage-nvme
+      #extraVolumeMounts:
+      #  - name: beegfs
+      #    mountPath: /home/jovyan/storage-nvme
+    cloudMetadata:
+      enabled: true
+    cpu:
+      limit: 4
+      guarantee: 1
+    memory:
+      limit: 14G
+      guarantee: 4G
+
+  hub:
+    db:
+      type: sqlite-pvc
+      pvc:
+        accessModes:
+          - ReadWriteOnce
+        storage: 1G
+        #storageClass: cinder
+    extraConfig:
+  cull:
+    enabled: true
+    users: false
+    timeout: 1200
+    every: 600
+
+  # this section specifies the IP address for pangeo.pydata.org
+  # remove or change for a custom cluster
+  proxy:
+    service:
+      #annotations:
+      #  service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+      type: LoadBalancer
+      # The following is a preallocated FIP
+      loadBalancerIP: 128.232.227.125
