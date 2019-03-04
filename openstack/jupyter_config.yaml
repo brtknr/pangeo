@@ -54,4 +54,4 @@ jupyterhub:
   ingress:
     enabled: true
     hosts:
-      - k8s-bharat-kube-masters-0
+      - ""
