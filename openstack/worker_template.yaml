@@ -1,0 +1,37 @@
+metadata:
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: beegfs-vol
+    hostPath:
+      path: /mnt/beegfs
+  containers:
+  - args:
+      - dask-worker
+      - --nthreads
+      - '2'
+      - --no-bokeh
+      - --memory-limit
+      - 6GB
+      - --death-timeout
+      - '60'
+    image: pangeo/notebook:92c4bfd
+    name: dask-worker
+    volumeMounts:
+    - mountPath: /home/jovyan/scratch
+      name: beegfs-vol
+    securityContext:
+      capabilities:
+        add: [SYS_ADMIN]
+      privileged: true
+    env:
+      - name: GCSFUSE_BUCKET
+        value: pangeo-data
+    resources:
+      limits:
+        cpu: "1.75"
+        memory: 6G
+      requests:
+        cpu: "1.75"
+        memory: 6G
+

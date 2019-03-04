@@ -1,0 +1,67 @@
+Name:               k8s-demo-ntsq5q2firj3-minion-0
+Roles:              <none>
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/instance-type=b7bdadfa-83a0-46a1-a854-f780b9d296c3
+                    beta.kubernetes.io/os=linux
+                    failure-domain.beta.kubernetes.io/zone=nova
+                    kubernetes.io/hostname=k8s-demo-ntsq5q2firj3-minion-0
+Annotations:        alpha.kubernetes.io/provided-node-ip: 10.60.253.13
+                    node.alpha.kubernetes.io/ttl: 0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Tue, 12 Feb 2019 10:31:37 +0000
+Taints:             <none>
+Unschedulable:      false
+Conditions:
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  OutOfDisk        False   Mon, 25 Feb 2019 22:58:56 +0000   Mon, 25 Feb 2019 16:44:24 +0000   KubeletHasSufficientDisk     kubelet has sufficient disk space available
+  MemoryPressure   False   Mon, 25 Feb 2019 22:58:56 +0000   Mon, 25 Feb 2019 16:44:24 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure     False   Mon, 25 Feb 2019 22:58:56 +0000   Mon, 25 Feb 2019 16:44:24 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  Ready            True    Mon, 25 Feb 2019 22:58:56 +0000   Mon, 25 Feb 2019 18:14:56 +0000   KubeletReady                 kubelet is posting ready status
+  PIDPressure      False   Mon, 25 Feb 2019 22:58:56 +0000   Tue, 12 Feb 2019 10:47:20 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+Addresses:
+  InternalIP:  10.60.253.13
+  Hostname:    k8s-demo-ntsq5q2firj3-minion-0
+Capacity:
+ cpu:                64
+ ephemeral-storage:  380518Mi
+ hugepages-1Gi:      0
+ hugepages-2Mi:      0
+ memory:             131923392Ki
+ pods:               110
+Allocatable:
+ cpu:                64
+ ephemeral-storage:  359101837537
+ hugepages-1Gi:      0
+ hugepages-2Mi:      0
+ memory:             131820992Ki
+ pods:               110
+System Info:
+ Machine ID:                 08477a381ce6494ab61bb88f45c6ab85
+ System UUID:                4C4C4544-0030-4E10-8030-B3C04F344A32
+ Boot ID:                    67ee980d-8344-4070-a5e5-25f0303791c1
+ Kernel Version:             4.16.12-200.fc27.x86_64
+ OS Image:                   Debian GNU/Linux 9 (stretch)
+ Operating System:           linux
+ Architecture:               amd64
+ Container Runtime Version:  docker://18.3.1
+ Kubelet Version:            v1.11.5
+ Kube-Proxy Version:         v1.11.5
+ProviderID:                  openstack:///231ba791-91ec-4540-a580-3ef493e36055
+Non-terminated Pods:         (6 in total)
+  Namespace                  Name                                              CPU Requests  CPU Limits  Memory Requests  Memory Limits      AGE
+  ---------                  ----                                              ------------  ----------  ---------------  -------------      ---
+  default                    beegfs-ds-5hzxm                                   0 (0%)        0 (0%)      0 (0%)           0 (0%)             13d
+  default                    internal-http-nginx-deployment-966857787-8p7k4    0 (0%)        0 (0%)      0 (0%)           0 (0%)             4d6h
+  default                    manila-provisioner-74c965c958-jbhxs               0 (0%)        0 (0%)      0 (0%)           0 (0%)             4d6h
+  kube-system                coredns-5864cfd79d-hkxk2                          0 (0%)        0 (0%)      0 (0%)           0 (0%)             4d6h
+  kube-system                tiller-deploy-66bfcbbd99-hxxb2                    0 (0%)        0 (0%)      0 (0%)           0 (0%)             4d6h
+  pangeo                     jupyter-brtknr                                    1 (1%)        4 (6%)      4294967296 (3%)  15032385536 (11%)  61s
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests         Limits
+  --------           --------         ------
+  cpu                1 (1%)           4 (6%)
+  memory             4294967296 (3%)  15032385536 (11%)
+  ephemeral-storage  0 (0%)           0 (0%)
+Events:              <none>
