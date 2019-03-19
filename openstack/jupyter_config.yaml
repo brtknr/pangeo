@@ -4,7 +4,7 @@ jupyterhub:
   singleuser:
     image:
       name: pangeo/pangeo-notebook
-      tag: 2019.01.31
+      tag: 2019.03.12
     startTimeout: 1000
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
@@ -17,7 +17,7 @@ jupyterhub:
       extraVolumes:
         - name: beegfs
           hostPath:
-            path: /mnt/beegfs
+            path: /mnt/storage-nvme
       extraVolumeMounts:
         - name: beegfs
           mountPath: /home/jovyan/scratch
@@ -53,19 +53,6 @@ jupyterhub:
         c.JupyterHub.logo_file = '/usr/local/share/jupyterhub/static/custom/images/logo.png'
         c.JupyterHub.template_paths = ['/usr/local/share/jupyterhub/custom_templates/',
                                       '/usr/local/share/jupyterhub/templates/']
-    extraVolumes:
-      - name: custom-templates
-        gitRepo:
-          repository: "http://github.com/pangeo-data/pangeo-custom-jupyterhub-templates.git"
-          revision: "b09721bb1a1248dc115730d3c8a791600eae257e"
-    extraVolumeMounts:
-      - mountPath: /usr/local/share/jupyterhub/custom_templates.git
-        name: custom-templates
-        subPath: "pangeo-custom-jupyterhub-templates/templates"
-      - mountPath: /usr/local/share/jupyterhub/static/custom
-        name: custom-templates
-        subPath: "pangeo-custom-jupyterhub-templates/assets"
-
   cull:
     enabled: true
     users: false
@@ -79,4 +66,4 @@ jupyterhub:
       annotations:
         service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
       type: LoadBalancer
-      loadBalancerIP: 10.60.253.60
+      loadBalancerIP: 10.60.253.100
