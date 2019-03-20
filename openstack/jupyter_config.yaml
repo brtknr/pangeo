@@ -6,9 +6,6 @@ jupyterhub:
       name: pangeo/pangeo-notebook
       tag: 2019.03.12
     startTimeout: 1000
-    extraEnv:
-      EXTRA_PIP_PACKAGES: >-
-      GCSFUSE_BUCKET: pangeo-data
     storage:
       type: dynamic
       capacity: 10G
@@ -20,7 +17,7 @@ jupyterhub:
             path: /mnt/storage-nvme
       extraVolumeMounts:
         - name: beegfs
-          mountPath: /home/jovyan/scratch
+          mountPath: /home/jovyan/storage-nvme
     cloudMetadata:
       enabled: true
     cpu:
@@ -53,6 +50,7 @@ jupyterhub:
         c.JupyterHub.logo_file = '/usr/local/share/jupyterhub/static/custom/images/logo.png'
         c.JupyterHub.template_paths = ['/usr/local/share/jupyterhub/custom_templates/',
                                       '/usr/local/share/jupyterhub/templates/']
+        c.Spawner.cmd = ['bash', '-l', '-c', 'exec jupyterhub-singleuser "$@"', '--']
   cull:
     enabled: true
     users: false
