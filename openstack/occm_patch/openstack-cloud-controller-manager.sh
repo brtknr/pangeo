@@ -151,7 +151,7 @@ spec:
       serviceAccountName: openstack-cloud-controller-manager
       containers:
       - name: openstack-cloud-controller-manager
-        image: ${occm_prefix}openstack-cloud-controller-manager:0.3.0
+        image: ${occm_prefix}openstack-cloud-controller-manager:v1.14.0
         command:
         - /bin/openstack-cloud-controller-manager
         - --v=2
