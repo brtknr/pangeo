@@ -2,5 +2,5 @@
 
 set -e
 
-terraform apply -auto-approve -var-file=prod.tfvars
+terraform apply -auto-approve
 kubectl create -f cinder-sc.yaml
