@@ -3,6 +3,8 @@
 set -e
 . config
 
+source magnum-tiller
+
 helm repo add pangeo https://pangeo-data.github.io/helm-chart/
 helm repo update
 
